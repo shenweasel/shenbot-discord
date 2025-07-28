@@ -2,8 +2,8 @@ from discord.ext import commands
 import discord
 import os
 from dotenv import load_dotenv
-import SnapCard
-import nightreignrandom
+import snap_card_fetch
+import simple_nreign_rand
 
 # Load environment variables from .env file
 load_dotenv()
@@ -34,7 +34,7 @@ async def on_ready():
         # placeholder for card lookup logic
         await ctx.send(f"Looking up card: {card_name}")
         # Call the SnapCard.py logic here
-        card_name, card_stats, ability = SnapCard.main(card_name)
+        card_name, card_stats, ability = snap_card_fetch.main(card_name)
         # Send the card details back to the Discord channel
         await ctx.send(f"{card_name} is {card_stats} and {ability}")
 
@@ -44,7 +44,7 @@ async def on_ready():
 
     @bot.command()
     async def nightpick(ctx, numrolls: int = 1):
-        characters = nightreignrandom.main(numrolls)
+        characters = simple_nreign_rand.main(numrolls)
         #return response in a readable fashion
         await ctx.send(f"For {numrolls} you have been given {characters} to play for this expedition. GL, HF!")
 
