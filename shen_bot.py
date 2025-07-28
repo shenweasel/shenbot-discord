@@ -30,6 +30,10 @@ async def on_ready():
         await ctx.send("Hello!")
 
     @bot.command()
+    async def commands(ctx):
+        await ctx.send("current commands include !snapcard, !snapcardhelp, !nightpick, and !nightpickhelp")
+
+    @bot.command()
     async def snapcard(ctx, *, card_name: str):
         # placeholder for card lookup logic
         await ctx.send(f"Looking up card: {card_name}")
@@ -39,13 +43,18 @@ async def on_ready():
         await ctx.send(f"{card_name} is {card_stats} and {ability}")
 
     @bot.command()
-    async def snapinfo(ctx):    
-        await ctx.send("This bot provides information about Marvel Snap cards. Use !snapcard <card_name> to get details. To search for High Evolutionary cards, use !snapcard Evolved Card Name.") 
+    async def snapcardhelp(ctx):    
+        await ctx.send("This bot fetches the card stats and ability for a given card. ex: !snapcard Baron Zemo to search for Baron Zemo. For High Evolutionary cards, use !snapcard evolved <character name>.") 
 
     @bot.command()
     async def nightpick(ctx, numrolls: int = 1):
         characters = simple_nreign_rand.main(numrolls)
         #return response in a readable fashion
         await ctx.send(f"For {numrolls} you have been given {characters} to play for this expedition. GL, HF!")
+
+    @bot.command()
+    async def nightpickhelp(ctx):    
+        await ctx.send("This command is for when you want a random nightfarer. Input should always be a number from 1 to 3. ex: !nightpick 2 will get two characters") 
+
 
 bot.run(bot_token)
