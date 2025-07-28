@@ -23,7 +23,7 @@ bot = commands.Bot(command_prefix='!', intents = discord.Intents.all())
 @bot.event
 async def on_ready():
     print(f'Logged in as {bot.user.name} - {bot.user.id}')
-    channel = bot.get_channel(channel_id)
+#    channel = bot.get_channel(channel_id)
 #    await channel.send("Hello, I am online!")
 
     @bot.command()
@@ -65,7 +65,7 @@ async def on_ready():
         await ctx.send("If you want to use the default of 1 player and no duplicates, just use !nightpick or !nightpick 1.")
     
     @bot.command()
-    async def erchallenge(ctx, class_type: str, soul_level_1: str = "no"):
+    async def erchallenge(ctx, class_type: str = "any", soul_level_1: str = "no"):
         await ctx.send(f"getting challenge run information with class type: {class_type}.")
         # Call the simple_er_challenge_run.py logic here
         soul_level_cap = simple_er_challenge_run.is_sl1(soul_level_1).decode('utf-8', 'ignore')
@@ -80,7 +80,7 @@ async def on_ready():
         await ctx.send("To start a challenge use !erchallenge <class_type> the valid class types are melee, ranged, caster, or any to pick randomly from all classes.")
         await ctx.send("You will receive an SL cap, starting class, and a weapon type restriction based on the class, for example melee can't roll ranged weapons.")
         await ctx.send("You can also use !erchallenge <class_type> yes to lock the run to SL1.")
-
+        await ctx.send("!erchallenge alone will give a random class type and SL cap, with a choice of 3 weapons for weapon restrictions.")
 
 
 bot.run(bot_token)
