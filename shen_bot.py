@@ -4,6 +4,7 @@ import os
 from dotenv import load_dotenv
 import snap_card_fetch
 import simple_nreign_rand
+import simple_er_challenge_run
 
 # Load environment variables from .env file
 load_dotenv()
@@ -23,7 +24,7 @@ bot = commands.Bot(command_prefix='!', intents = discord.Intents.all())
 async def on_ready():
     print(f'Logged in as {bot.user.name} - {bot.user.id}')
     channel = bot.get_channel(channel_id)
-    await channel.send("Hello, I am online!")
+#    await channel.send("Hello, I am online!")
 
     @bot.command()
     async def hello(ctx):
@@ -47,14 +48,34 @@ async def on_ready():
         await ctx.send("This bot fetches the card stats and ability for a given card. ex: !snapcard Baron Zemo to search for Baron Zemo. For High Evolutionary cards, use !snapcard evolved <character name>.") 
 
     @bot.command()
-    async def nightpick(ctx, numrolls: int = 1):
-        characters = simple_nreign_rand.main(numrolls)
+    async def nightpick(ctx, numrolls: int = 1, allow_dupes: str = "no"):
+        if allow_dupes == "yes":
+            characters = simple_nreign_rand.main(numrolls, allow_dupes)
+            dupes_allowed = "duplicates allowed"
+        else:
+            characters = simple_nreign_rand.main(numrolls, allow_dupes)
+            dupes_allowed = "no duplicates allowed"
         #return response in a readable fashion
-        await ctx.send(f"For {numrolls} you have been given {characters} to play for this expedition. GL, HF!")
+        await ctx.send(f"For {numrolls} players with {dupes_allowed} you have been given {characters} to play for this expedition. GL, HF!")
 
     @bot.command()
     async def nightpickhelp(ctx):    
         await ctx.send("This command is for when you want a random nightfarer. Input should always be a number from 1 to 3. ex: !nightpick 2 will get two characters") 
+    
+    @bot.command()
+    async def erchallenge(ctx):
+        await ctx.send("To start a challenge use !erchallengeget <class_type> the valid class types are melee, ranged, caster, or any.")
+
+    @bot.command()
+    async def erchallengeget(ctx, class_type: str):
+        await ctx.send(f"getting challenge run information with class type: {class_type}.")
+        #return response in a readable fashion
+        soul_level_cap = simple_er_challenge_run.is_sl1("no").decode('utf-8', 'ignore')
+        character_class = simple_er_challenge_run.get_class_type(class_type)
+        class_weapon_to_use = simple_er_challenge_run.get_weapon_type(class_type).decode('utf-8', 'ignore')
+        region_locked = simple_er_challenge_run.is_region_locked("random").decode('utf-8', 'ignore')
+        # Send the challenge details back to the Discord channel
+        await ctx.send(f"{soul_level_cap}, your class will be {character_class} and {class_weapon_to_use}. {region_locked}")
 
 
 bot.run(bot_token)
