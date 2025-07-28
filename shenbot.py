@@ -3,6 +3,7 @@ import discord
 import os
 from dotenv import load_dotenv
 import SnapCard
+import nightreignrandom
 
 # Load environment variables from .env file
 load_dotenv()
@@ -40,5 +41,11 @@ async def on_ready():
     @bot.command()
     async def snapinfo(ctx):    
         await ctx.send("This bot provides information about Marvel Snap cards. Use !snapcard <card_name> to get details. To search for High Evolutionary cards, use !snapcard Evolved Card Name.") 
+
+    @bot.command()
+    async def nightpick(ctx, numrolls: int = 1):
+        characters = nightreignrandom.main(numrolls)
+        #return response in a readable fashion
+        await ctx.send(f"For {numrolls} you have been given {characters} to play for this expedition. GL, HF!")
 
 bot.run(bot_token)

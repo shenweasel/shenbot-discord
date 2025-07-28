@@ -1,7 +1,7 @@
 from bs4 import BeautifulSoup
 import requests
 
-card_name = "misty knight"
+card_name = ""
 card_stats = ""
 abiity = ""
 agamotto_skill_cards = {
@@ -25,7 +25,7 @@ def main(card_name):
 
 def get_card_name(card_name):
 
-    card_name_stripped = card_name.replace(" ", "").strip().casefold()
+    card_name_stripped = card_name.replace(" ", "").replace("'", "").strip().casefold()
     agamotto_skill_cards = {
         "windsofwatoomb": "Spell01Agamotto", 
         "temporalmanipulation": "Spell02Agamotto",
