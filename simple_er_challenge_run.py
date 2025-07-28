@@ -2,7 +2,7 @@
 
 import random
 
-soul_level = "no"
+soul_level_1 = "no"
 soul_level_cap = ""
 class_type = ""
 
@@ -67,8 +67,8 @@ ranged_weapon_list = [
     ]
 
 def main(class_type):
-    
-    soul_level_cap = is_sl1(soul_level)
+
+    soul_level_cap = is_sl1(soul_level_1)
     character_class = get_class_type(class_type)
     region_locked = is_region_locked(region_lock).decode('utf-8', 'ignore')
     class_weapon_to_use = get_weapon_type(class_type)
@@ -76,8 +76,8 @@ def main(class_type):
 
     
 
-def is_sl1(soul_level):
-    if soul_level == "yes":
+def is_sl1(soul_level_1):
+    if soul_level_1 == "yes":
         soul_level_cap = b"For this run you will be locked to SL1"
         return soul_level_cap
     else:

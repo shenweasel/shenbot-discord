@@ -32,7 +32,7 @@ async def on_ready():
 
     @bot.command()
     async def commands(ctx):
-        await ctx.send("current commands include !snapcard, !snapcardhelp, !nightpick, and !nightpickhelp")
+        await ctx.send("current commands include !snapcard, !snapcardhelp, !nightpick, and !nightpickhelp, !erchallenge, and !erchallengeget. For more information on each command use the help command after the command name. ex: !snapcardhelp")
 
     @bot.command()
     async def snapcard(ctx, *, card_name: str):
@@ -60,22 +60,27 @@ async def on_ready():
 
     @bot.command()
     async def nightpickhelp(ctx):    
-        await ctx.send("This command is for when you want a random nightfarer. Input should always be a number from 1 to 3. ex: !nightpick 2 will get two characters") 
+        await ctx.send("Get a random nightfarer for 1 to 3 players. Input should always be a number from 1 to 3. ex: !nightpick 2 will get two characters")
+        await ctx.send("!nightpick 3 yes will get three characters with duplicates allowed.") 
+        await ctx.send("If you want to use the default of 1 player and no duplicates, just use !nightpick or !nightpick 1.")
     
     @bot.command()
-    async def erchallenge(ctx):
-        await ctx.send("To start a challenge use !erchallengeget <class_type> the valid class types are melee, ranged, caster, or any.")
-
-    @bot.command()
-    async def erchallengeget(ctx, class_type: str):
+    async def erchallenge(ctx, class_type: str, soul_level_1: str = "no"):
         await ctx.send(f"getting challenge run information with class type: {class_type}.")
-        #return response in a readable fashion
-        soul_level_cap = simple_er_challenge_run.is_sl1("no").decode('utf-8', 'ignore')
+        # Call the simple_er_challenge_run.py logic here
+        soul_level_cap = simple_er_challenge_run.is_sl1(soul_level_1).decode('utf-8', 'ignore')
         character_class = simple_er_challenge_run.get_class_type(class_type)
         class_weapon_to_use = simple_er_challenge_run.get_weapon_type(class_type).decode('utf-8', 'ignore')
         region_locked = simple_er_challenge_run.is_region_locked("random").decode('utf-8', 'ignore')
         # Send the challenge details back to the Discord channel
         await ctx.send(f"{soul_level_cap}, your class will be {character_class} and {class_weapon_to_use}. {region_locked}")
+
+    @bot.command()
+    async def erchallengehelp(ctx):
+        await ctx.send("To start a challenge use !erchallenge <class_type> the valid class types are melee, ranged, caster, or any to pick randomly from all classes.")
+        await ctx.send("You will receive an SL cap, starting class, and a weapon type restriction based on the class, for example melee can't roll ranged weapons.")
+        await ctx.send("You can also use !erchallenge <class_type> yes to lock the run to SL1.")
+
 
 
 bot.run(bot_token)
