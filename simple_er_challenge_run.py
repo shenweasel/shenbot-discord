@@ -6,6 +6,8 @@ soul_level_1 = "no"
 soul_level_cap = ""
 class_type = ""
 sote = ""
+sote_rule = ""
+sote_weapon_rule = ""
 
 region_lock = "random"
 class_weapon = ""
@@ -115,21 +117,22 @@ def main(class_type):
 
     soul_level_cap = is_sl1(soul_level_1)
     character_class = get_class_type(class_type)
-    region_locked = is_region_locked(region_lock).decode('utf-8', 'ignore')
-    class_weapon_to_use = get_weapon_type(class_type)
-    sote_rule = is_sote(sote).decode('utf-8', 'ignore')
+    region_locked = is_region_locked(region_lock)
+    sote_weapon_rule = get_sote_weapon_rule(sote, sote_rule)
+    class_weapon_to_use = get_weapon_type(class_type, sote_weapon_rule)
+    sote_rule = is_sote(sote)
     print(f"{soul_level_cap} your class will be {character_class} and {class_weapon_to_use}. {region_locked} {sote_rule}")
-
     
 
 def is_sl1(soul_level_1):
     if soul_level_1 == "yes":
-        soul_level_cap = b"For this run you will be locked to SL1"
+        soul_level_cap = "For this run you will be locked to SL1"
         return soul_level_cap
     else:
         level_cap = random.choice(sl_caps)
-        soul_level_cap = f"For this run you will be capped at SL{level_cap}".encode('utf-8')
+        soul_level_cap = f"For this run you will be capped at SL{level_cap}"
         return soul_level_cap
+
 
 def get_class_type(class_type):
     if class_type == "melee":
@@ -144,70 +147,91 @@ def get_class_type(class_type):
     else:
         character_class = random.choice(master_class_list)
         return character_class
-    
-def get_weapon_type(class_type, sote):
-    if class_type == "melee" and sote == "nosote":
+
+
+def is_sote(sote):
+    if sote == "yes":
+        sote_rule = "This run allows Scadu Tree Fragments."
+        return sote_rule
+    elif sote == "no":
+        sote_rule = "This run does not allow Scadu Tree Fragments."
+        return sote_rule
+    elif sote == "nosote":
+        sote_rule = "Shadows of the Erdtree is not included for this run."
+        return sote_rule
+    else:
+        sote_rule = random.choice(["This run allows Scadu Tree Fragments.", 
+                       "This run does not allow Scadu Tree Fragments.", 
+                       "Shadows of the Erdtree is not included for this run."
+                   ])
+        sote_rule = "".join(sote_rule)
+        return sote_rule
+
+
+def get_sote_weapon_rule(sote, sote_rule):
+    if sote == "yes" or sote_rule == "no":
+        sote_weapon_rule = "yes"
+    elif sote == "nosote":
+        sote_weapon_rule = "nosote"
+    else:
+        if sote_rule == "Shadows of the Erdtree is not included for this run.":
+            sote_weapon_rule = "nosote"
+        else:
+            sote_weapon_rule = "yes"
+    return sote_weapon_rule
+
+
+def get_weapon_type(class_type, sote_weapon_rule):
+    if sote_weapon_rule == "yes" or sote_weapon_rule == "no":
+        sote_weapon_rule = "yes"
+    if class_type == "melee" and sote_weapon_rule == "nosote":
         class_weapon_type = random.choice(melee_weapon_list)
-        class_weapon_to_use = f"your weapon type will be: {class_weapon_type}".encode('utf-8')
+        class_weapon_to_use = f"your weapon type will be: {class_weapon_type}"
         return class_weapon_to_use
-    elif class_type == "ranged"and sote == "nosote":
+    elif class_type == "ranged"and sote_weapon_rule == "nosote":
         class_weapon_type = random.choice(ranged_weapon_list)
-        class_weapon_to_use = f"your weapon type will be: {class_weapon_type}".encode('utf-8')
+        class_weapon_to_use = f"your weapon type will be: {class_weapon_type}"
         return class_weapon_to_use
-    elif class_type == "caster"and sote == "nosote":
+    elif class_type == "caster"and sote_weapon_rule == "nosote":
         class_weapon_type = random.choice(caster_type_list)
-        class_weapon_to_use = f"your spell school will be: {class_weapon_type}".encode('utf-8')
+        class_weapon_to_use = f"your spell school will be: {class_weapon_type}"
         return class_weapon_to_use
-    elif class_type == "melee" and sote == "yes":
+    elif class_type == "melee" and sote_weapon_rule == "yes":
         class_weapon_type = random.choice(sote_melee_weapon_list)
-        class_weapon_to_use = f"your weapon type will be: {class_weapon_type}".encode('utf-8')
+        class_weapon_to_use = f"your weapon type will be: {class_weapon_type}"
         return class_weapon_to_use
-    elif class_type == "ranged" and sote == "yes":
+    elif class_type == "ranged" and sote_weapon_rule == "yes":
         class_weapon_type = random.choice(sote_ranged_weapon_list)
-        class_weapon_to_use = f"your weapon type will be: {class_weapon_type}".encode('utf-8')
-        return class_weapon_to_use  
-    elif class_type == "any" and sote == "yes":
+        class_weapon_to_use = f"your weapon type will be: {class_weapon_type}"
+        return class_weapon_to_use
+    elif class_type == "any" and sote_weapon_rule == "yes":
         class_weapon_type_1 = random.choice(sote_melee_weapon_list)
         class_weapon_type_2 = random.choice(sote_ranged_weapon_list)
         class_weapon_type_3 = random.choice(caster_type_list)
-        class_weapon_to_use = f"your weapon type is a choice of one of these three: {class_weapon_type_1}, {class_weapon_type_2}, {class_weapon_type_3}".encode('utf-8')
+        class_weapon_to_use = f"your weapon type is a choice of one of these three: {class_weapon_type_1}, {class_weapon_type_2}, {class_weapon_type_3}"
         return class_weapon_to_use
-    else:
+    elif class_type == "any" and sote_weapon_rule == "nosote":
         class_weapon_type_1 = random.choice(melee_weapon_list)
         class_weapon_type_2 = random.choice(ranged_weapon_list)
         class_weapon_type_3 = random.choice(caster_type_list)
-        class_weapon_to_use = f"your weapon type is a choice of one of these three: {class_weapon_type_1}, {class_weapon_type_2}, {class_weapon_type_3}".encode('utf-8')
+        class_weapon_to_use = f"your weapon type is a choice of one of these three: {class_weapon_type_1}, {class_weapon_type_2}, {class_weapon_type_3}"
         return class_weapon_to_use
+
     
 def is_region_locked(region_locked):
     if region_locked == "yes":
-        region_locked = b"This run is region locked."
+        region_locked = "This run is region locked."
         return region_locked
     elif region_locked == "no":
-        region_locked = b"This run is not region locked."
+        region_locked = "This run is not region locked."
         return region_locked
     else:
-        random_lock = [b"This run is region locked.", 
-                       b"This run is not region locked."]
+        random_lock = ["This run is region locked.", 
+                       "This run is not region locked."]
         region_locked = random.choice(random_lock)
         return region_locked
     
-def is_sote(sote):
-    if sote == "yes":
-        sote = b"This run allows Scadu Tree Fragments."
-        return sote
-    elif sote == "no":
-        sote = b"This run does not allow Scadu Tree Fragments."
-        return sote
-    elif sote == "nosote":
-        sote = b"Shadows of the Erdtree is not included for this run."
-        return sote
-    else:
-        random_sote = [b"This run allows Scadu Tree Fragments.", 
-                       b"This run does not allow Scadu Tree Fragments.", 
-                       b"Shadows of the Erdtree is not included for this run."]
-        sote = random.choice(random_sote)
-        return sote
+
 
 if __name__ == "__main__":
     main()
