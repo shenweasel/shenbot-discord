@@ -4,7 +4,7 @@ import discord
 import os
 from dotenv import load_dotenv
 import snap_card_fetch
-import simple_nreign_rand
+import simple_nreign_random_pick
 import simple_er_challenge_run
 import asyncio
 
@@ -52,19 +52,23 @@ async def on_ready():
     @bot.command()
     async def nightpick(ctx, numrolls: int = 1, allow_dupes: str = "no"):
         if allow_dupes == "yes":
-            characters = simple_nreign_rand.main(numrolls, allow_dupes)
+            characters = simple_nreign_random_pick.main(numrolls, allow_dupes)
             dupes_allowed = "duplicates allowed"
         else:
-            characters = simple_nreign_rand.main(numrolls, allow_dupes)
+            characters = simple_nreign_random_pick.main(numrolls, allow_dupes)
             dupes_allowed = "no duplicates allowed"
         #return response in a readable fashion
-        await ctx.send(f"For {numrolls} players with {dupes_allowed} you have been given {characters} to play for this expedition. GL, HF!")
+        if numrolls > 1:
+            await ctx.send(f"For {numrolls} players with {dupes_allowed} you have been given {characters} to play for this expedition. GL, HF!")
+        else:
+            await ctx.send(f"For {numrolls} player you have been given {characters} to play for this expedition. GL, HF!")
 
     @bot.command()
     async def nightpickhelp(ctx):    
-        await ctx.send("Get a random nightfarer for 1 to 3 players. Input should always be a number from 1 to 3. ex: !nightpick 2 will get two characters")
+        await ctx.send("Get a random nightfarer for 1 to 3 players. Input should always be a digit from 1 to 3. ex: !nightpick 2 will get two characters")
+        await ctx.send("Default player value is 1 player and default allow dupes value is no.")
         await ctx.send("!nightpick 3 yes will get three characters with duplicates allowed.") 
-        await ctx.send("If you want to use the default of 1 player and no duplicates, just use !nightpick or !nightpick 1.")
+        await ctx.send("!nightpick 1 will generate one character.")
     
     @bot.command()
     async def erchallenge(ctx, class_type: str = "any", soul_level_1: str = "no", sote: str = "nosote"):
