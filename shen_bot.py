@@ -74,7 +74,7 @@ async def on_ready():
         if class_type == "any" or soul_level_1 =="yes" or soul_level_1 == "any":
             crashout = random.randint(1, 1000)
             if crashout == 1:
-                await ctx.send("SL1 No Hit Challenge Run. GLHF!")
+                await ctx.send("Cast in the name of God: Ye Guilty. SL1 No Hit Challenge run. Choose your weapons wisely. GLHF!")
             elif crashout > 1:
                 # Call the simple_er_challenge_run.py logic here we will not return sote_weapon_rule in the output 
                 # as it is not used in the discord command
