@@ -1,4 +1,4 @@
 # shenbot-discord
-personal discord bot
+simple personal discord bot coded in python.
 
 tokens and channel ids are within the .env file.
