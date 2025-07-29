@@ -65,22 +65,33 @@ async def on_ready():
         await ctx.send("If you want to use the default of 1 player and no duplicates, just use !nightpick or !nightpick 1.")
     
     @bot.command()
-    async def erchallenge(ctx, class_type: str = "any", soul_level_1: str = "no"):
+    async def erchallenge(ctx, class_type: str = "any", soul_level_1: str = "no", sote: str = "nosote"):
         await ctx.send(f"getting challenge run information with class type: {class_type}.")
         # Call the simple_er_challenge_run.py logic here
         soul_level_cap = simple_er_challenge_run.is_sl1(soul_level_1).decode('utf-8', 'ignore')
         character_class = simple_er_challenge_run.get_class_type(class_type)
-        class_weapon_to_use = simple_er_challenge_run.get_weapon_type(class_type).decode('utf-8', 'ignore')
+        class_weapon_to_use = simple_er_challenge_run.get_weapon_type(class_type, sote).decode('utf-8', 'ignore')
         region_locked = simple_er_challenge_run.is_region_locked("random").decode('utf-8', 'ignore')
+        sote_rule = sote
+        if sote_rule == "yes": 
+            sote_rule = simple_er_challenge_run.is_sote(sote).decode('utf-8', 'ignore')
+        elif sote_rule == "no":
+            sote_rule = simple_er_challenge_run.is_sote(sote).decode('utf-8', 'ignore')
+        elif sote_rule == "nosote":
+            sote_rule = simple_er_challenge_run.is_sote(sote="nosote").decode('utf-8', 'ignore')
+        else:
+            sote_rule = simple_er_challenge_run.is_sote(sote="any").decode('utf-8', 'ignore')
         # Send the challenge details back to the Discord channel
-        await ctx.send(f"{soul_level_cap}, your class will be {character_class} and {class_weapon_to_use}. {region_locked}")
+        await ctx.send(f"{soul_level_cap}, your class will be {character_class} and {class_weapon_to_use}. {region_locked} {sote_rule}")
 
     @bot.command()
     async def erchallengehelp(ctx):
-        await ctx.send("To start a challenge use !erchallenge <class_type> the valid class types are melee, ranged, caster, or any to pick randomly from all classes.")
-        await ctx.send("You will receive an SL cap, starting class, and a weapon type restriction based on the class, for example melee can't roll ranged weapons.")
-        await ctx.send("You can also use !erchallenge <class_type> yes to lock the run to SL1.")
-        await ctx.send("!erchallenge alone will give a random class type and SL cap, with a choice of 3 weapons for weapon restrictions.")
+        await ctx.send("To start a challenge use !erchallenge <class_type> <soul_level_1> <sote>." )
+        await ctx.send("the valid class types are melee, ranged, caster, or any.")
+        await ctx.send("the valid soul_level_1 options are yes, no or any. Which will lock the run to SL1 or not.")
+        await ctx.send("the valid sote options are yes, no, nosote, or any. Which will determine the use of Scadu Tree Fragments, skipping SotE entirely, or randomizing.")
+        await ctx.send("You will receive an SL cap, starting class, and a weapon type restriction based on the initial class type chosen.")
+        await ctx.send("!erchallenge alone will give a random class type and SL cap, with a choice of 3 weapons for weapon restrictions and asumes SotE will be skipped.")
 
 
 bot.run(bot_token)
