@@ -1,3 +1,4 @@
+import random
 from discord.ext import commands
 import discord
 import os
@@ -5,6 +6,7 @@ from dotenv import load_dotenv
 import snap_card_fetch
 import simple_nreign_rand
 import simple_er_challenge_run
+import asyncio
 
 # Load environment variables from .env file
 load_dotenv()
@@ -66,23 +68,24 @@ async def on_ready():
     
     @bot.command()
     async def erchallenge(ctx, class_type: str = "any", soul_level_1: str = "no", sote: str = "nosote"):
-        await ctx.send(f"getting challenge run information with class type: {class_type}.")
-        # Call the simple_er_challenge_run.py logic here
-        soul_level_cap = simple_er_challenge_run.is_sl1(soul_level_1).decode('utf-8', 'ignore')
-        character_class = simple_er_challenge_run.get_class_type(class_type)
-        class_weapon_to_use = simple_er_challenge_run.get_weapon_type(class_type, sote).decode('utf-8', 'ignore')
-        region_locked = simple_er_challenge_run.is_region_locked("random").decode('utf-8', 'ignore')
-        sote_rule = sote
-        if sote_rule == "yes": 
-            sote_rule = simple_er_challenge_run.is_sote(sote).decode('utf-8', 'ignore')
-        elif sote_rule == "no":
-            sote_rule = simple_er_challenge_run.is_sote(sote).decode('utf-8', 'ignore')
-        elif sote_rule == "nosote":
-            sote_rule = simple_er_challenge_run.is_sote(sote="nosote").decode('utf-8', 'ignore')
-        else:
-            sote_rule = simple_er_challenge_run.is_sote(sote="any").decode('utf-8', 'ignore')
-        # Send the challenge details back to the Discord channel
-        await ctx.send(f"{soul_level_cap}, your class will be {character_class} and {class_weapon_to_use}. {region_locked} {sote_rule}")
+        await ctx.send(f"generating your challenge run, please hold a moment...")
+        # Short sleep to simulate processing time
+        await asyncio.sleep(1)
+        if class_type == "any" or soul_level_1 =="yes" or soul_level_1 == "any":
+            crashout = random.randint(1, 1000)
+            if crashout == 1:
+                await ctx.send("SL1 No Hit Challenge Run. GLHF!")
+            elif crashout > 1:
+                # Call the simple_er_challenge_run.py logic here we will not return sote_weapon_rule in the output 
+                # as it is not used in the discord command
+                soul_level_cap = simple_er_challenge_run.is_sl1(soul_level_1)
+                character_class = simple_er_challenge_run.get_class_type(class_type)
+                sote_rule = simple_er_challenge_run.is_sote(sote)
+                sote_weapon_rule = simple_er_challenge_run.get_sote_weapon_rule(sote, sote_rule)
+                class_weapon_to_use = simple_er_challenge_run.get_weapon_type(class_type, sote_weapon_rule)
+                region_locked = simple_er_challenge_run.is_region_locked("random")
+                # Send the challenge details back to the Discord channel
+                await ctx.send(f"{soul_level_cap}, your class will be {character_class} and {class_weapon_to_use}. {region_locked} {sote_rule} GLHF!")
 
     @bot.command()
     async def erchallengehelp(ctx):
