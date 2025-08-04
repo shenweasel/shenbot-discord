@@ -1,4 +1,4 @@
-import random
+from random import sample, choices
 
 numrolls = 2
 allow_dupes = "no"
