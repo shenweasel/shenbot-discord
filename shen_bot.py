@@ -97,7 +97,7 @@ async def erchallenge(ctx, class_type: str = "any", soul_level_1: str = "no", so
             await ctx.send("Cast in the name of God: Ye Guilty. SL1 No Hit Challenge run. Choose your weapons wisely. GLHF!")
         elif crashout > 1:
             # Call the simple_er_challenge_run.py logic here we will not return sote_weapon_rule in the output 
-            # as it is not used in the discord command
+            # as it is used to determine weapon type which is returned in class_weapon_to_use.
             soul_level_cap = simple_er_challenge_run.is_sl1(soul_level_1)
             character_class = simple_er_challenge_run.get_class_type(class_type)
             sote_rule = simple_er_challenge_run.is_sote(sote)
