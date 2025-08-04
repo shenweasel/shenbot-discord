@@ -92,7 +92,7 @@ async def erchallenge(ctx, class_type: str = "any", soul_level_1: str = "no", so
     # Short sleep to simulate processing time
     await asyncio.sleep(1)
     if class_type == "any" or soul_level_1 =="yes" or soul_level_1 == "any":
-        crashout = random.randint(1, 1000)
+        crashout = randint(1, 1000)
         if crashout == 1:
             await ctx.send("Cast in the name of God: Ye Guilty. SL1 No Hit Challenge run. Choose your weapons wisely. GLHF!")
         elif crashout > 1:
@@ -103,7 +103,7 @@ async def erchallenge(ctx, class_type: str = "any", soul_level_1: str = "no", so
             sote_rule = simple_er_challenge_run.is_sote(sote)
             sote_weapon_rule = simple_er_challenge_run.get_sote_weapon_rule(sote, sote_rule)
             class_weapon_to_use = simple_er_challenge_run.get_weapon_type(class_type, sote_weapon_rule)
-            region_locked = simple_er_challenge_run.is_region_locked("random")
+            region_locked = simple_er_challenge_run.is_region_locked("either")
             # Send the challenge details back to the Discord channel
             await ctx.send(f"{soul_level_cap}, your class will be {character_class} and {class_weapon_to_use}. {region_locked} {sote_rule} GLHF!")
 

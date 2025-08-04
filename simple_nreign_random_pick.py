@@ -22,14 +22,14 @@ def main(numrolls, allow_dupes):
 def dupe_is_allowed(allow_dupes):
 
     if allow_dupes == "yes":
-        characters = random.choices(nightfarers, k=numrolls)
+        characters = choices(nightfarers, k=numrolls)
         characters = " and ".join(characters)
         return characters
     
 def no_dupe_allowed(allow_dupes):
 
     if allow_dupes == "no":
-        characters = random.sample(nightfarers, numrolls)
+        characters = sample(nightfarers, numrolls)
         characters = " and ".join(characters)
         return characters
 

@@ -9,7 +9,7 @@ sote = ""
 sote_rule = ""
 sote_weapon_rule = ""
 
-region_lock = "random"
+region_lock = "either"
 class_weapon = ""
 
 sl_caps = ["1", "69", "75", "90", "120", "150", "300"]
@@ -129,23 +129,23 @@ def is_sl1(soul_level_1):
         soul_level_cap = "For this run you will be locked to SL1"
         return soul_level_cap
     else:
-        level_cap = random.choice(sl_caps)
+        level_cap = choice(sl_caps)
         soul_level_cap = f"For this run you will be capped at SL{level_cap}"
         return soul_level_cap
 
 
 def get_class_type(class_type):
     if class_type == "melee":
-        character_class = random.choice(melee_class_list)
+        character_class = choice(melee_class_list)
         return character_class
     elif class_type == "ranged":
-        character_class = random.choice(ranged_class_list)
+        character_class = choice(ranged_class_list)
         return character_class
     elif class_type == "caster":
-        character_class = random.choice(caster_class_list)
+        character_class = choice(caster_class_list)
         return character_class
     else:
-        character_class = random.choice(master_class_list)
+        character_class = choice(master_class_list)
         return character_class
 
 
@@ -160,7 +160,7 @@ def is_sote(sote):
         sote_rule = "Shadows of the Erdtree is not included for this run."
         return sote_rule
     else:
-        sote_rule = random.choice(["This run allows Scadu Tree Fragments.", 
+        sote_rule = choice(["This run allows Scadu Tree Fragments.", 
                        "This run does not allow Scadu Tree Fragments.", 
                        "Shadows of the Erdtree is not included for this run."
                    ])
@@ -185,35 +185,35 @@ def get_weapon_type(class_type, sote_weapon_rule):
     if sote_weapon_rule == "yes" or sote_weapon_rule == "no":
         sote_weapon_rule = "yes"
     if class_type == "melee" and sote_weapon_rule == "nosote":
-        class_weapon_type = random.choice(melee_weapon_list)
+        class_weapon_type = choice(melee_weapon_list)
         class_weapon_to_use = f"your weapon type will be: {class_weapon_type}"
         return class_weapon_to_use
     elif class_type == "ranged"and sote_weapon_rule == "nosote":
-        class_weapon_type = random.choice(ranged_weapon_list)
+        class_weapon_type = choice(ranged_weapon_list)
         class_weapon_to_use = f"your weapon type will be: {class_weapon_type}"
         return class_weapon_to_use
     elif class_type == "caster"and sote_weapon_rule == "nosote":
-        class_weapon_type = random.choice(caster_type_list)
+        class_weapon_type = choice(caster_type_list)
         class_weapon_to_use = f"your spell school will be: {class_weapon_type}"
         return class_weapon_to_use
     elif class_type == "melee" and sote_weapon_rule == "yes":
-        class_weapon_type = random.choice(sote_melee_weapon_list)
+        class_weapon_type = choice(sote_melee_weapon_list)
         class_weapon_to_use = f"your weapon type will be: {class_weapon_type}"
         return class_weapon_to_use
     elif class_type == "ranged" and sote_weapon_rule == "yes":
-        class_weapon_type = random.choice(sote_ranged_weapon_list)
+        class_weapon_type = choice(sote_ranged_weapon_list)
         class_weapon_to_use = f"your weapon type will be: {class_weapon_type}"
         return class_weapon_to_use
     elif class_type == "any" and sote_weapon_rule == "yes":
-        class_weapon_type_1 = random.choice(sote_melee_weapon_list)
-        class_weapon_type_2 = random.choice(sote_ranged_weapon_list)
-        class_weapon_type_3 = random.choice(caster_type_list)
+        class_weapon_type_1 = choice(sote_melee_weapon_list)
+        class_weapon_type_2 = choice(sote_ranged_weapon_list)
+        class_weapon_type_3 = choice(caster_type_list)
         class_weapon_to_use = f"your weapon type is a choice of one of these three: {class_weapon_type_1}, {class_weapon_type_2}, {class_weapon_type_3}"
         return class_weapon_to_use
     elif class_type == "any" and sote_weapon_rule == "nosote":
-        class_weapon_type_1 = random.choice(melee_weapon_list)
-        class_weapon_type_2 = random.choice(ranged_weapon_list)
-        class_weapon_type_3 = random.choice(caster_type_list)
+        class_weapon_type_1 = choice(melee_weapon_list)
+        class_weapon_type_2 = choice(ranged_weapon_list)
+        class_weapon_type_3 = choice(caster_type_list)
         class_weapon_to_use = f"your weapon type is a choice of one of these three: {class_weapon_type_1}, {class_weapon_type_2}, {class_weapon_type_3}"
         return class_weapon_to_use
 
@@ -228,7 +228,7 @@ def is_region_locked(region_locked):
     else:
         random_lock = ["This run is region locked.", 
                        "This run is not region locked."]
-        region_locked = random.choice(random_lock)
+        region_locked = choice(random_lock)
         return region_locked
     
 
