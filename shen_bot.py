@@ -1,4 +1,4 @@
-import random
+from random import randint
 from discord.ext import commands
 import discord
 import os
@@ -50,7 +50,7 @@ async def snapcardhelp(ctx):
                    "For High Evolutionary cards, use !snapcard evolved <character name>.") 
 
 @bot.command()
-async def nightpick(ctx, numrolls: int = 1, allow_dupes: str = "no"):
+async def nightreign(ctx, numrolls: int = 1, allow_dupes: str = "no"):
     if numrolls < 1 or numrolls > 3:
         await ctx.send("Please enter a number from 1 to 3 for the number of players.")
         return
