@@ -1,6 +1,6 @@
 # a basic challenge run creator
 
-import random
+from random import choice
 
 soul_level_1 = "no"
 soul_level_cap = ""
