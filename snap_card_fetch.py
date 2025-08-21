@@ -3,13 +3,8 @@ import requests
 
 card_name = ""
 card_stats = ""
-abiity = ""
-agamotto_skill_cards = {
-        "windsofwatoomb": "Spell01Agamotto", 
-        "temporalmanipulation": "Spell02Agamotto",
-        "imagesofikonn": "Spell03Agamotto",
-        "boltsofbalthakk": "Spell04Agamotto"    
-    }
+ability = ""
+
 
 def main(card_name):
     
@@ -31,9 +26,18 @@ def get_card_name(card_name):
         "temporalmanipulation": "Spell02Agamotto",
         "imagesofikonn": "Spell03Agamotto",
         "boltsofbalthakk": "Spell04Agamotto"    
-    }
+        }
+    fallen_one_fix = (
+        "thefallenone", 
+        "fallenone", 
+        )
+
     if card_name_stripped in agamotto_skill_cards:
         card_name_stripped = agamotto_skill_cards[card_name_stripped]
+
+    if card_name_stripped in fallen_one_fix:
+        card_name_stripped = "FallenOne"
+    
     return card_name_stripped
 
 def get_content(card_name):
