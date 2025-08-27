@@ -4,7 +4,7 @@ from random import choice
 
 soul_level_1 = "no"
 soul_level_cap = ""
-class_type = ""
+job_type = ""
 sote = ""
 sote_rule = ""
 sote_weapon_rule = ""
@@ -113,13 +113,13 @@ sote_ranged_weapon_list = [
     "Perfume Bottles (SoTE) - combine with Tools: Any",
     ]
 
-def main(class_type):
+def main(job_type):
 
     soul_level_cap = is_sl1(soul_level_1)
-    character_class = get_class_type(class_type)
+    character_class = get_job_type(job_type)
     region_locked = is_region_locked(region_lock)
     sote_weapon_rule = get_sote_weapon_rule(sote, sote_rule)
-    class_weapon_to_use = get_weapon_type(class_type, sote_weapon_rule)
+    class_weapon_to_use = get_weapon_type(job_type, sote_weapon_rule)
     sote_rule = is_sote(sote)
     print(f"{soul_level_cap} your class will be {character_class} and {class_weapon_to_use}. {region_locked} {sote_rule}")
     
@@ -134,14 +134,14 @@ def is_sl1(soul_level_1):
         return soul_level_cap
 
 
-def get_class_type(class_type):
-    if class_type == "melee":
+def get_job_type(job_type):
+    if job_type == "melee":
         character_class = choice(melee_class_list)
         return character_class
-    elif class_type == "ranged":
+    elif job_type == "ranged":
         character_class = choice(ranged_class_list)
         return character_class
-    elif class_type == "caster":
+    elif job_type == "caster":
         character_class = choice(caster_class_list)
         return character_class
     else:
@@ -181,36 +181,36 @@ def get_sote_weapon_rule(sote, sote_rule):
     return sote_weapon_rule
 
 
-def get_weapon_type(class_type, sote_weapon_rule):
+def get_weapon_type(job_type, sote_weapon_rule):
     if sote_weapon_rule == "yes" or sote_weapon_rule == "no":
         sote_weapon_rule = "yes"
-    if class_type == "melee" and sote_weapon_rule == "nosote":
+    if job_type == "melee" and sote_weapon_rule == "nosote":
         class_weapon_type = choice(melee_weapon_list)
         class_weapon_to_use = f"your weapon type will be: {class_weapon_type}"
         return class_weapon_to_use
-    elif class_type == "ranged"and sote_weapon_rule == "nosote":
+    elif job_type == "ranged"and sote_weapon_rule == "nosote":
         class_weapon_type = choice(ranged_weapon_list)
         class_weapon_to_use = f"your weapon type will be: {class_weapon_type}"
         return class_weapon_to_use
-    elif class_type == "caster"and sote_weapon_rule == "nosote":
+    elif job_type == "caster"and sote_weapon_rule == "nosote":
         class_weapon_type = choice(caster_type_list)
         class_weapon_to_use = f"your spell school will be: {class_weapon_type}"
         return class_weapon_to_use
-    elif class_type == "melee" and sote_weapon_rule == "yes":
+    elif job_type == "melee" and sote_weapon_rule == "yes":
         class_weapon_type = choice(sote_melee_weapon_list)
         class_weapon_to_use = f"your weapon type will be: {class_weapon_type}"
         return class_weapon_to_use
-    elif class_type == "ranged" and sote_weapon_rule == "yes":
+    elif job_type == "ranged" and sote_weapon_rule == "yes":
         class_weapon_type = choice(sote_ranged_weapon_list)
         class_weapon_to_use = f"your weapon type will be: {class_weapon_type}"
         return class_weapon_to_use
-    elif class_type == "any" and sote_weapon_rule == "yes":
+    elif job_type == "any" and sote_weapon_rule == "yes":
         class_weapon_type_1 = choice(sote_melee_weapon_list)
         class_weapon_type_2 = choice(sote_ranged_weapon_list)
         class_weapon_type_3 = choice(caster_type_list)
         class_weapon_to_use = f"your weapon type is a choice of one of these three: {class_weapon_type_1}, {class_weapon_type_2}, {class_weapon_type_3}"
         return class_weapon_to_use
-    elif class_type == "any" and sote_weapon_rule == "nosote":
+    elif job_type == "any" and sote_weapon_rule == "nosote":
         class_weapon_type_1 = choice(melee_weapon_list)
         class_weapon_type_2 = choice(ranged_weapon_list)
         class_weapon_type_3 = choice(caster_type_list)

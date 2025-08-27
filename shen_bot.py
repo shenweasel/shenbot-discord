@@ -73,12 +73,12 @@ async def nightpickhelp(ctx):
     await ctx.send("!nightpick 1 will generate one character.")
 
 @bot.command()
-async def erchallenge(ctx, class_type: str = "any", soul_level_1: str = "no", sote: str = "nosote"):
-    class_type = class_type.casefold().strip()
+async def erchallenge(ctx, job_type: str = "any", soul_level_1: str = "no", sote: str = "nosote"):
+    job_type = job_type.casefold().strip()
     soul_level_1 = soul_level_1.casefold().strip()
     sote = sote.casefold().strip()
     # Validate inputs
-    if class_type not in ["melee", "ranged", "caster", "any"]:
+    if job_type not in ["melee", "ranged", "caster", "any"]:
         await ctx.send("Invalid class type. Valid options are melee, ranged, caster, or any.")
         return
     if soul_level_1 not in ["yes", "no", "any"]:
@@ -88,7 +88,7 @@ async def erchallenge(ctx, class_type: str = "any", soul_level_1: str = "no", so
         await ctx.send("Invalid SotE option. Valid options are yes, no, nosote, or any.")
         return
     await ctx.send(f"generating your challenge run, please hold a moment...")
-    if class_type == "any" or soul_level_1 =="yes" or soul_level_1 == "any":
+    if job_type == "any" or soul_level_1 =="yes" or soul_level_1 == "any":
         crashout = randint(1, 1000)
         if crashout == 1:
             await ctx.send("Cast in the name of God: Ye Guilty. SL1 No Hit Challenge run. Choose your weapons wisely. GLHF!")
@@ -96,17 +96,17 @@ async def erchallenge(ctx, class_type: str = "any", soul_level_1: str = "no", so
             # Call the simple_er_challenge_run.py logic here we will not return sote_weapon_rule in the output 
             # as it is used to determine weapon type which is returned in class_weapon_to_use.
             soul_level_cap = simple_er_challenge_run.is_sl1(soul_level_1)
-            character_class = simple_er_challenge_run.get_class_type(class_type)
+            character_class = simple_er_challenge_run.get_job_type(job_type)
             sote_rule = simple_er_challenge_run.is_sote(sote)
             sote_weapon_rule = simple_er_challenge_run.get_sote_weapon_rule(sote, sote_rule)
-            class_weapon_to_use = simple_er_challenge_run.get_weapon_type(class_type, sote_weapon_rule)
+            class_weapon_to_use = simple_er_challenge_run.get_weapon_type(job_type, sote_weapon_rule)
             region_locked = simple_er_challenge_run.is_region_locked("either")
             # Send the challenge details back to the Discord channel
             await ctx.send(f"{soul_level_cap}, your class will be {character_class} and {class_weapon_to_use}. {region_locked} {sote_rule} GLHF!")
 
 @bot.command()
 async def erchallengehelp(ctx):
-    await ctx.send("To start a challenge use !erchallenge <class_type> <soul_level_1> <sote>." )
+    await ctx.send("To start a challenge use !erchallenge <job_type> <soul_level_1> <sote>." )
     await ctx.send("the valid class types are melee, ranged, caster, or any.")
     await ctx.send("the valid soul_level_1 options are yes, no or any. Which will lock the run to SL1 or not.")
     await ctx.send("the valid sote options are yes, no, nosote, or any. Which will determine the use of Scadu Tree Fragments, skipping SotE entirely, or randomizing.")
