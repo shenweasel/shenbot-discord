@@ -6,7 +6,6 @@ from dotenv import load_dotenv
 import snap_card_fetch
 import simple_nreign_random_pick
 import simple_er_challenge_run
-import asyncio
 
 # Load environment variables from .env file
 load_dotenv('D:/Weasel-Repo/Projects/shenbot-discord/.env_shenbot/.env')
@@ -32,7 +31,7 @@ async def hello(ctx):
 
 @bot.command()
 async def commands(ctx):
-    await ctx.send("current commands include !snapcard, !snapcardhelp, !nightpick, and !nightpickhelp, !erchallenge, and !erchallengeget. "
+    await ctx.send("current commands include !snapcard, !snapcardhelp, !nightpick, !nightpickhelp, !erchallenge, and !erchallengeget. "
                    "For more information on each command use the help command after the command name. ex: !snapcardhelp")
 
 @bot.command()
@@ -89,8 +88,6 @@ async def erchallenge(ctx, class_type: str = "any", soul_level_1: str = "no", so
         await ctx.send("Invalid SotE option. Valid options are yes, no, nosote, or any.")
         return
     await ctx.send(f"generating your challenge run, please hold a moment...")
-    # Short sleep to simulate processing time
-    await asyncio.sleep(1)
     if class_type == "any" or soul_level_1 =="yes" or soul_level_1 == "any":
         crashout = randint(1, 1000)
         if crashout == 1:
