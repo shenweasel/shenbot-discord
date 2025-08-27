@@ -94,15 +94,15 @@ async def erchallenge(ctx, job_type: str = "any", soul_level_1: str = "no", sote
             await ctx.send("Cast in the name of God: Ye Guilty. SL1 No Hit Challenge run. Choose your weapons wisely. GLHF!")
         elif crashout > 1:
             # Call the simple_er_challenge_run.py logic here we will not return sote_weapon_rule in the output 
-            # as it is used to determine weapon type which is returned in class_weapon_to_use.
+            # as it is used to determine weapon type which is returned in job_weapon_to_use.
             soul_level_cap = simple_er_challenge_run.is_sl1(soul_level_1)
-            character_class = simple_er_challenge_run.get_job_type(job_type)
+            character_job = simple_er_challenge_run.get_job_type(job_type)
             sote_rule = simple_er_challenge_run.is_sote(sote)
             sote_weapon_rule = simple_er_challenge_run.get_sote_weapon_rule(sote, sote_rule)
-            class_weapon_to_use = simple_er_challenge_run.get_weapon_type(job_type, sote_weapon_rule)
+            job_weapon_to_use = simple_er_challenge_run.get_weapon_type(job_type, sote_weapon_rule)
             region_locked = simple_er_challenge_run.is_region_locked("either")
             # Send the challenge details back to the Discord channel
-            await ctx.send(f"{soul_level_cap}, your class will be {character_class} and {class_weapon_to_use}. {region_locked} {sote_rule} GLHF!")
+            await ctx.send(f"{soul_level_cap}, your class will be {character_job} and {job_weapon_to_use}. {region_locked} {sote_rule} GLHF!")
 
 @bot.command()
 async def erchallengehelp(ctx):

@@ -13,10 +13,10 @@ region_lock = "either"
 class_weapon = ""
 
 sl_caps = ["1", "69", "75", "90", "120", "150", "300"]
-master_class_list = ["Astrologer", "Bandit", "Confessor", "Hero", "Prisoner", "Prophet", "Samurai", "Vagabond", "Warrior", "Wretch"]
-melee_class_list = ["Bandit", "Hero", "Prisoner", "Prophet", "Samurai", "Vagabond", "Warrior", "Wretch"]
-caster_class_list = ["Astrologer", "Confessor", "Prophet", "Warrior", "Wretch"]
-ranged_class_list = ["Astrologer", "Bandit", "Hero", "Prisoner", "Prophet", "Samurai", "Warrior", "Wretch"]
+master_job_list = ["Astrologer", "Bandit", "Confessor", "Hero", "Prisoner", "Prophet", "Samurai", "Vagabond", "Warrior", "Wretch"]
+melee_job_list = ["Bandit", "Hero", "Prisoner", "Prophet", "Samurai", "Vagabond", "Warrior", "Wretch"]
+caster_job_list = ["Astrologer", "Confessor", "Prophet", "Warrior", "Wretch"]
+ranged_job_list = ["Astrologer", "Bandit", "Hero", "Prisoner", "Prophet", "Samurai", "Warrior", "Wretch"]
 
 melee_weapon_list = [
     "Colossal", 
@@ -119,9 +119,9 @@ def main(job_type):
     character_class = get_job_type(job_type)
     region_locked = is_region_locked(region_lock)
     sote_weapon_rule = get_sote_weapon_rule(sote, sote_rule)
-    class_weapon_to_use = get_weapon_type(job_type, sote_weapon_rule)
+    job_weapon_to_use = get_weapon_type(job_type, sote_weapon_rule)
     sote_rule = is_sote(sote)
-    print(f"{soul_level_cap} your class will be {character_class} and {class_weapon_to_use}. {region_locked} {sote_rule}")
+    print(f"{soul_level_cap} your class will be {character_class} and {job_weapon_to_use}. {region_locked} {sote_rule}")
     
 
 def is_sl1(soul_level_1):
@@ -136,16 +136,16 @@ def is_sl1(soul_level_1):
 
 def get_job_type(job_type):
     if job_type == "melee":
-        character_class = choice(melee_class_list)
+        character_class = choice(melee_job_list)
         return character_class
     elif job_type == "ranged":
-        character_class = choice(ranged_class_list)
+        character_class = choice(ranged_job_list)
         return character_class
     elif job_type == "caster":
-        character_class = choice(caster_class_list)
+        character_class = choice(caster_job_list)
         return character_class
     else:
-        character_class = choice(master_class_list)
+        character_class = choice(master_job_list)
         return character_class
 
 
@@ -185,37 +185,37 @@ def get_weapon_type(job_type, sote_weapon_rule):
     if sote_weapon_rule == "yes" or sote_weapon_rule == "no":
         sote_weapon_rule = "yes"
     if job_type == "melee" and sote_weapon_rule == "nosote":
-        class_weapon_type = choice(melee_weapon_list)
-        class_weapon_to_use = f"your weapon type will be: {class_weapon_type}"
-        return class_weapon_to_use
+        job_weapon_type = choice(melee_weapon_list)
+        job_weapon_to_use = f"your weapon type will be: {job_weapon_type}"
+        return job_weapon_to_use
     elif job_type == "ranged"and sote_weapon_rule == "nosote":
-        class_weapon_type = choice(ranged_weapon_list)
-        class_weapon_to_use = f"your weapon type will be: {class_weapon_type}"
-        return class_weapon_to_use
+        job_weapon_type = choice(ranged_weapon_list)
+        job_weapon_to_use = f"your weapon type will be: {job_weapon_type}"
+        return job_weapon_to_use
     elif job_type == "caster"and sote_weapon_rule == "nosote":
-        class_weapon_type = choice(caster_type_list)
-        class_weapon_to_use = f"your spell school will be: {class_weapon_type}"
-        return class_weapon_to_use
+        job_weapon_type = choice(caster_type_list)
+        job_weapon_to_use = f"your spell school will be: {job_weapon_type}"
+        return job_weapon_to_use
     elif job_type == "melee" and sote_weapon_rule == "yes":
-        class_weapon_type = choice(sote_melee_weapon_list)
-        class_weapon_to_use = f"your weapon type will be: {class_weapon_type}"
-        return class_weapon_to_use
+        job_weapon_type = choice(sote_melee_weapon_list)
+        job_weapon_to_use = f"your weapon type will be: {job_weapon_type}"
+        return job_weapon_to_use
     elif job_type == "ranged" and sote_weapon_rule == "yes":
-        class_weapon_type = choice(sote_ranged_weapon_list)
-        class_weapon_to_use = f"your weapon type will be: {class_weapon_type}"
-        return class_weapon_to_use
+        job_weapon_type = choice(sote_ranged_weapon_list)
+        job_weapon_to_use = f"your weapon type will be: {job_weapon_type}"
+        return job_weapon_to_use
     elif job_type == "any" and sote_weapon_rule == "yes":
-        class_weapon_type_1 = choice(sote_melee_weapon_list)
-        class_weapon_type_2 = choice(sote_ranged_weapon_list)
-        class_weapon_type_3 = choice(caster_type_list)
-        class_weapon_to_use = f"your weapon type is a choice of one of these three: {class_weapon_type_1}, {class_weapon_type_2}, {class_weapon_type_3}"
-        return class_weapon_to_use
+        job_weapon_type_1 = choice(sote_melee_weapon_list)
+        job_weapon_type_2 = choice(sote_ranged_weapon_list)
+        job_weapon_type_3 = choice(caster_type_list)
+        job_weapon_to_use = f"your weapon type is a choice of one of these three: {job_weapon_type_1}, {job_weapon_type_2}, {job_weapon_type_3}"
+        return job_weapon_to_use
     elif job_type == "any" and sote_weapon_rule == "nosote":
-        class_weapon_type_1 = choice(melee_weapon_list)
-        class_weapon_type_2 = choice(ranged_weapon_list)
-        class_weapon_type_3 = choice(caster_type_list)
-        class_weapon_to_use = f"your weapon type is a choice of one of these three: {class_weapon_type_1}, {class_weapon_type_2}, {class_weapon_type_3}"
-        return class_weapon_to_use
+        job_weapon_type_1 = choice(melee_weapon_list)
+        job_weapon_type_2 = choice(ranged_weapon_list)
+        job_weapon_type_3 = choice(caster_type_list)
+        job_weapon_to_use = f"your weapon type is a choice of one of these three: {job_weapon_type_1}, {job_weapon_type_2}, {job_weapon_type_3}"
+        return job_weapon_to_use
 
     
 def is_region_locked(region_locked):
