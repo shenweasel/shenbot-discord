@@ -9,7 +9,7 @@ import simple_er_challenge_run
 import asyncio
 
 # Load environment variables from .env file
-load_dotenv()
+load_dotenv('D:/Weasel-Repo/Projects/shenbot-discord/.env_shenbot/.env')
 
 
 bot_token = os.getenv('bot_token')
